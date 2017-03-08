@@ -1,0 +1,111 @@
+function Main.main 1
+	push constant 8001
+	push constant 16
+	push constant 1
+	neg
+	call Main.fillMemory
+	push constant 8000
+	call Memory.peek
+	pop local 0
+	push local 0
+	call Main.convert
+	return
+
+
+function Main.convert 3
+	push constant 0
+	not
+	pop local 2
+label whileLabel_0
+	push local 2
+	if-goto whileLoopLabel_0
+	goto whileContLabel_0
+label whileLoopLabel_0
+	push local 0
+	push constant 1
+	add
+	pop local 0
+	push local 0
+	call Main.nextMask
+	pop local 0
+	push local 0
+	push constant 16
+	gt
+	not
+	if-goto ifTrueLabel_0
+	goto ifFalseLabel_0
+label ifTrueLabel_0
+	push argument 0
+	push local 0
+	and
+	push constant 0
+	eq
+	not
+	if-goto ifTrueLabel_0
+	goto ifFalseLabel_0
+label ifTrueLabel_0
+	push constant 8000
+	push local 0
+	add
+	push constant 1
+	call Memory.poke
+	goto ifContLabel_0
+label ifFalseLabel_0
+	push constant 8000
+	push local 0
+	add
+	push constant 0
+	call Memory.poke
+label ifContLabel_0
+	goto ifContLabel_0
+label ifFalseLabel_0
+	push constant 0
+	pop local 2
+label ifContLabel_0
+	goto whileLabel_0
+label whileContLabel_0
+	return
+
+
+function Main.nextMask 0
+	push argument 0
+	push constant 0
+	eq
+	if-goto ifTrueLabel_2
+	goto ifFalseLabel_2
+label ifTrueLabel_2
+	push constant 1
+	return
+	goto ifContLabel_2
+label ifFalseLabel_2
+	push argument 0
+	push constant 2
+	call Math.multiply 2
+	return
+label ifContLabel_2
+
+
+function Main.fillMemory 0
+label whileLabel_1
+	push argument 0
+	push constant 0
+	gt
+	if-goto whileLoopLabel_1
+	goto whileContLabel_1
+label whileLoopLabel_1
+	push argument 0
+	push argument 0
+	call Memory.poke
+	push argument 0
+	push constant 1
+	sub
+	pop argument 0
+	push argument 0
+	push constant 1
+	add
+	pop argument 0
+	goto whileLabel_1
+label whileContLabel_1
+	return
+
+
